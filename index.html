@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parque Marítimo César Manrique - Proyecto Aquakit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            background: #667eea;
+            color: white;
+        }
+
+        .nav-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .section {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #e0e8f7 0%, #d5ddf0 100%);
+            border-radius: 12px;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            max-width: 600px;
+            height: 350px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            min-width: 150px;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .stat-item h3 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .stat-item p {
+            font-size: 0.9em;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 30px 0;
+        }
+
+        .timeline-item {
+            padding: 20px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            margin-left: 30px;
+            position: relative;
+        }
+
+        .timeline-item:before {
+            content: "●";
+            position: absolute;
+            left: -12px;
+            top: 20px;
+            color: #667eea;
+            font-size: 1.5em;
+            background: white;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 5px solid #fdcb6e;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .highlight-box strong {
+            color: #d63031;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table tr:hover {
+            background: #f5f7fa;
+        }
+
+        .icon-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .icon-item {
+            flex: 1;
+            min-width: 200px;
+            padding: 20px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .icon-item:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .icon-emoji {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>PARQUE MARÍTIMO CÉSAR MANRIQUE</h1>
+            <p style="font-weight: 500; color: #444; margin-top: 15px;">Memoria de Organización del Servicio | AQUAKIT S.L.</p>
+            <div style="width: 80px; height: 3px; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); margin: 20px auto 0;"></div>
+        </header>
+
+        <div class="navigation">
+            <button class="nav-btn active" onclick="showSection(0)">Empresa</button>
+            <button class="nav-btn" onclick="showSection(1)">Instalaciones</button>
+            <button class="nav-btn" onclick="showSection(2)">Servicios</button>
+            <button class="nav-btn" onclick="showSection(3)">Personal</button>
+            <button class="nav-btn" onclick="showSection(4)">Seguridad</button>
+            <button class="nav-btn" onclick="showSection(5)">Calidad</button>
+        </div>
+
+        <!-- SECCIÓN 1: EMPRESA -->
+        <div class="section active">
+            <h2>AQUAKIT S.L. - Nuestra Empresa</h2>
+            
+            <div class="image-container">
+                <div class="image-placeholder" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); font-size: 1.8em; letter-spacing: 2px;">GESTIÓN INTEGRAL DE INSTALACIONES DEPORTIVAS</div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <h3>2004</h3>
+                    <p>Año de fundación</p>
+                </div>
+                <div class="stat-item">
+                    <h3>+70</h3>
+                    <p>Clientes privados</p>
+                </div>
+                <div class="stat-item">
+                    <h3>17+</h3>
+                    <p>Años experiencia</p>
+                </div>
+            </div>
+
+            <h3>Nuestra Experiencia</h3>
+            <p style="line-height: 1.8; margin-bottom: 20px;">PISCINAS AQUAKIT S.L. es una empresa líder en gestión de servicios deportivos y mantenimiento integral de instalaciones desde 2004. Contamos con amplia experiencia en administraciones públicas y clientes privados.</p>
+
+            <div class="grid">
+                <div class="card">
+                    <h4>Prestación de Servicios</h4>
+                    <ul>
+                        <li>Personal técnico especializado</li>
+                        <li>Programas deportivos</li>
+                        <li>Monitores y coordinadores</li>
+                        <li>Personal sanitario certificado</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Servicios Integrales</h4>
+                    <ul>
+                        <li>Gestión completa de instalaciones</li>
+                        <li>Dotación de materiales</li>
+                        <li>Explotación de espacios deportivos</li>
+                        <li>Control de calidad continuo</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Referencias Destacadas</h4>
+                    <ul>
+                        <li>Getafe, San Sebastián de los Reyes</li>
+                        <li>Universidad Complutense Madrid</li>
+                        <li>Consejo Superior de Deportes</li>
+                        <li>Red de Paradores Nacionales</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Recursos e Infraestructura</h3>
+            <div class="icon-list">
+                <div class="icon-item">
+                    <div class="icon-emoji">🏢</div>
+                    <strong>Sede Social</strong>
+                    <p>Avenida Real de Pinto 87, Madrid</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-emoji">🚐</div>
+                    <strong>Parque Móvil</strong>
+                    <p>6 vehículos especializados</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-emoji">🏭</div>
+                    <strong>Naves Industriales</strong>
+                    <p>Stock de productos y herramientas</p>
+                </div>
+            </div>
+
+            <h3>Equipo Directivo</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>Director General</h4>
+                    <p><strong>D. Raúl Viyuela Caballero</strong></p>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Técnico en Mantenimiento, Máster en Gestión y Dirección de Instalaciones Deportivas</p>
+                </div>
+                <div class="card">
+                    <h4>Administración</h4>
+                    <p><strong>Dña. Loubna Sakhi Al Achhab</strong></p>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Grado en Gestión Administrativa, Especialidad en Contabilidad</p>
+                </div>
+                <div class="card">
+                    <h4>Director de Proyectos</h4>
+                    <p><strong>José Sánchez Ochoa</strong></p>
+                    <p style="font-size: 0.9em; margin-top: 10px;">MBA, Máster en Dirección de RRHH, TAFAD</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: INSTALACIONES -->
+        <div class="section">
+            <h2>Instalaciones del Parque Marítimo</h2>
+
+            <div class="image-container">
+                <div class="image-placeholder" style="background: linear-gradient(135deg, #0575E6 0%, #021B79 100%); font-size: 1.6em; letter-spacing: 1px;">TRES PISCINAS DE AGUA DE MAR</div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <h3>9,840 m²</h3>
+                    <p>Superficie total de lámina de agua</p>
+                </div>
+                <div class="stat-item">
+                    <h3>7-8</h3>
+                    <p>Puestos de vigilancia</p>
+                </div>
+                <div class="stat-item">
+                    <h3>365</h3>
+                    <p>Días al año operativos</p>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <h4>Piscina Principal - Pérgola</h4>
+                    <p><strong>Superficie:</strong> 6,500 m²</p>
+                    <p><strong>Acceso:</strong> Escaleras y rampas adaptadas</p>
+                    <p><strong>Ubicación:</strong> Zona central del complejo</p>
+                    <p><strong>Puestos vigilancia:</strong> S1, S2, S3, S4</p>
+                </div>
+
+                <div class="card">
+                    <h4>Piscina Infantil</h4>
+                    <p><strong>Superficie:</strong> 340 m²</p>
+                    <p><strong>Característica:</strong> Cascada entre rocas volcánicas</p>
+                    <p><strong>Ubicación:</strong> Parte central del solarium</p>
+                    <p><strong>Puestos vigilancia:</strong> S5</p>
+                </div>
+
+                <div class="card">
+                    <h4>Piscina Cascada</h4>
+                    <p><strong>Superficie:</strong> 3,000 m²</p>
+                    <p><strong>Cascadas:</strong> Dos a más de 25m de altura</p>
+                    <p><strong>Ubicación:</strong> Bajo restaurante La Cascada</p>
+                    <p><strong>Puestos vigilancia:</strong> S6, S7</p>
+                </div>
+            </div>
+
+            <h3>Distribución de Servicios por Temporada</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Temporada</th>
+                        <th>Horario</th>
+                        <th>Coordinador</th>
+                        <th>Socorristas</th>
+                        <th>DUE</th>
+                        <th>Horas/Semana</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Baja/Media</strong></td>
+                        <td>10:00 - 18:00</td>
+                        <td>1 puesto</td>
+                        <td>2 puestos</td>
+                        <td>-</td>
+                        <td>112 hrs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alta</strong></td>
+                        <td>10:00 - 19:00</td>
+                        <td>63 hrs</td>
+                        <td>7-8 puestos (504 hrs)</td>
+                        <td>63 hrs</td>
+                        <td>630 hrs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Semana Santa/Mayo</strong></td>
+                        <td>10:00 - 19:00</td>
+                        <td>63 hrs</td>
+                        <td>7-8 puestos (504 hrs)</td>
+                        <td>63 hrs</td>
+                        <td>630 hrs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <strong>Sistema de Rotación:</strong> Los socorristas realizan rotaciones de puesto cada hora en sentido contrario a las agujas del reloj para mantener máxima concentración y cobertura visual completa.
+            </div>
+
+            <h3>Organización de Turnos</h3>
+            <div class="card">
+                <h4>Temporada Alta</h4>
+                <ul>
+                    <li><strong>Coordinador:</strong> Jornada completa + parcial (22 hrs)</li>
+                    <li><strong>Socorristas:</strong> 13 jornadas completas en turnos rotativos 5/2 o 4/3</li>
+                    <li><strong>DUE:</strong> Jornada completa + parcial (22 hrs)</li>
+                    <li><strong>Descansos:</strong> Rotación de 40 minutos desde las 13:00 hrs</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: SERVICIOS -->
+        <div class="section">
+            <h2>Servicios y Protocolos de Actuación</h2>
+
+            <div class="image-container">
+                <div class="image-placeholder" style="background: linear-gradient(135deg, #DC2424 0%, #4A569D 100%); font-size: 1.6em; letter-spacing: 1px;">PROTOCOLOS DE EMERGENCIA CERTIFICADOS</div>
+            </div>
+
+            <h3>Objetivos del Servicio</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>PREVENCIÓN</h4>
+                    <ul>
+                        <li>Control activo del comportamiento de usuarios</li>
+                        <li>Orientación sobre uso correcto de instalaciones</li>
+                        <li>Identificación temprana de situaciones de riesgo</li>
+                        <li>Cumplimiento de normativa de seguridad</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>VIGILANCIA</h4>
+                    <ul>
+                        <li>Supervisión permanente de los vasos</li>
+                        <li>Detección inmediata de emergencias</li>
+                        <li>Resolución rápida de incidencias</li>
+                        <li>Coordinación con servicios médicos</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>INTERVENCIÓN</h4>
+                    <ul>
+                        <li>Salvamento acuático especializado</li>
+                        <li>Primeros auxilios certificados</li>
+                        <li>RCP y soporte vital básico</li>
+                        <li>Coordinación con emergencias 112</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Plan de Actuación ante Emergencias (PAE)</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <strong>FASE 1: DETECCIÓN</strong>
+                    <p>El socorrista percibe el problema de forma directa o recibe alerta de compañeros/usuarios</p>
+                </div>
+                <div class="timeline-item">
+                    <strong>FASE 2: COMUNICACIÓN</strong>
+                    <p>Aviso inmediato vía walkie-talkie al equipo médico, coordinador y resto del equipo. Localización exacta del incidente</p>
+                </div>
+                <div class="timeline-item">
+                    <strong>FASE 3: SALVAMENTO</strong>
+                    <p>Inicio de maniobras de rescate acuático si es necesario. Evacuación de zona de baño</p>
+                </div>
+                <div class="timeline-item">
+                    <strong>FASE 4: PRIMEROS AUXILIOS</strong>
+                    <p>Valoración ABC (Airway-Breathing-Circulation). Inicio de RCP básica si procede</p>
+                </div>
+                <div class="timeline-item">
+                    <strong>FASE 5: INTERVENCIÓN SANITARIA</strong>
+                    <p>DUE/Médico asume el caso. Soporte vital avanzado con DESA. Traslado a botiquín o estabilización in situ</p>
+                </div>
+                <div class="timeline-item">
+                    <strong>FASE 6: ACTIVACIÓN 112</strong>
+                    <p>Llamada a servicios de emergencia externos si es necesario. Información completa del paciente</p>
+                </div>
+                <div class="timeline-item">
+                    <strong>FASE 7: COORDINACIÓN</strong>
+                    <p>Jefe de Emergencia coordina acceso de ambulancia, mantiene orden y restablece servicios</p>
+                </div>
+                <div class="timeline-item">
+                    <strong>FASE 8: EVALUACIÓN</strong>
+                    <p>Análisis post-emergencia, documentación del incidente y relevo del personal</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>⚡ TIEMPO DE RESPUESTA GARANTIZADO:</strong> Menos de 60 segundos desde la detección hasta el inicio de la intervención de salvamento
+            </div>
+
+            <h3>Sistemas de Comunicación</h3>
+            <div class="icon-list">
+                <div class="icon-item">
+                    <div class="icon-emoji">📻</div>
+                    <strong>Walkie-Talkies</strong>
+                    <p>Comunicación instantánea entre todo el equipo</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-emoji">📱</div>
+                    <strong>Móviles</strong>
+                    <p>Línea directa con coordinación 24/7</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-emoji">🚨</div>
+                    <strong>Silbatos</strong>
+                    <p>Señales acústicas de alerta</p>
+                </div>
+            </div>
+
+            <h3>Material de Emergencia</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>Equipo de Salvamento</h4>
+                    <ul>
+                        <li>Tubos de rescate homologados</li>
+                        <li>Aros salvavidas</li>
+                        <li>Camillas rígidas y férulas</li>
+                        <li>Arneses y cuerdas de rescate</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Material Sanitario</h4>
+                    <ul>
+                        <li>Desfibrilador semiautomático (DESA)</li>
+                        <li>Botiquín completo homologado</li>
+                        <li>Mascarillas de RCP</li>
+                        <li>Inmovilizadores cervicales</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Botiquines Portátiles</h4>
+                    <ul>
+                        <li>Mini-botiquines para cada socorrista</li>
+                        <li>Material de curas básico</li>
+                        <li>Guantes desechables</li>
+                        <li>Antisépticos y vendajes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 4: PERSONAL -->
+        <div class="section">
+            <h2>Equipo Humano Profesional</h2>
+
+            <div class="image-container">
+                <div class="image-placeholder" style="background: linear-gradient(135deg, #134E5E 0%, #71B280 100%); font-size: 1.6em; letter-spacing: 1px;">PERSONAL CERTIFICADO Y EXPERIMENTADO</div>
+            </div>
+
+            <h3>Estructura del Equipo</h3>
+            <div class="stats">
+                <div class="stat-item">
+                    <h3>1</h3>
+                    <p>Coordinador permanente</p>
+                </div>
+                <div class="stat-item">
+                    <h3>7-8</h3>
+                    <p>Socorristas acuáticos</p>
+                </div>
+                <div class="stat-item">
+                    <h3>1</h3>
+                    <p>DUE (temporada alta)</p>
+                </div>
+            </div>
+
+            <h3>Staff Técnico Operativo</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>COORDINADOR DEL SERVICIO</h4>
+                    <p><strong>Presencia física diaria</strong></p>
+                    <p style="margin-top: 15px;"><strong>Funciones principales:</strong></p>
+                    <ul>
+                        <li>Enlace técnico con Parque Marítimo</li>
+                        <li>Control y supervisión de plantilla</li>
+                        <li>Gestión de incidencias operativas</li>
+                        <li>Control de materiales e inventario</li>
+                        <li>Recopilación de datos estadísticos</li>
+                        <li>Coordinación de turnos y descansos</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>SOCORRISTAS ACUÁTICOS</h4>
+                    <p><strong>Certificación vigente obligatoria</strong></p>
+                    <p style="margin-top: 15px;"><strong>Responsabilidades:</strong></p>
+                    <ul>
+                        <li>Vigilancia permanente de vasos</li>
+                        <li>Prevención de accidentes</li>
+                        <li>Salvamento y rescate acuático</li>
+                        <li>Primeros auxilios y RCP</li>
+                        <li>Control de uso de instalaciones</li>
+                        <li>Colaboración con servicios médicos</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>DUE - DIPLOMADO EN ENFERMERÍA</h4>
+                    <p><strong>Titulación universitaria oficial</strong></p>
+                    <p style="margin-top: 15px;"><strong>Competencias:</strong></p>
+                    <ul>
+                        <li>Asistencia sanitaria inmediata</li>
+                        <li>Soporte vital avanzado</li>
+                        <li>Coordinación de emergencias</li>
+                        <li>Control sanitario de instalaciones</li>
+                        <li>Gestión de medicación y material</li>
+                        <li>Registro de incidencias -médicas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3
